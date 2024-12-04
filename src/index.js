@@ -1,24 +1,28 @@
 import dotenv from 'dotenv'
-dotenv.config() 
+dotenv.config(
+{    path:'./.env'
+}) 
+import colors from 'colors'
 import express from 'express'
 import cors from 'cors'
 import { connectDB } from './db/db.js'
+import {app} from './app.js'
+import multer from './middlewares/multer.middleware.js'
+
 connectDB()
-
-
-const app = express()
-app.use(cors())
-const PORT = process.env.PORT || 8080
-
-app.get('/',(req,res)=>{
-    res.send('backend is working fine!!')
+.then(()=>{
+    app.listen(process.env.PORT, () => {
+        console.log('-----------------------------');
+        console.log('-----------------------------');
+        console.log(`server running on port `.bgBrightBlue+process.env.PORT.bgBrightBlue );
+    });
+    
+})
+.catch((err)=>{
+    console.log('mongodb connection failed !!',err )
 })
 
- 
-app.listen(PORT, () => {
-    console.log('-----------------------------');
-    console.log('-----------------------------');
-    console.log(`server running on port `+PORT);
-});
 
  
+
+  
